@@ -59,7 +59,7 @@ export const AppRoutes = () => {
                     <Stack.Screen 
                         name="detail" 
                         component={DetailPage} 
-                        options={ {sheetAllowedDetents: [0.8, 0.95]} }
+                        options={ {sheetAllowedDetents: [0.8]} }
                     />
                     <Stack.Screen 
                         name="setUserName" 

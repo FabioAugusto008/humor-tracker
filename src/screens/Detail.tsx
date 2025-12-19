@@ -1,9 +1,11 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from "react-native"
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { TNavigationScreenProps, TRouteProps } from "../Routes";
 import { theme } from "../shared/themes/Theme";
 import { BaseInput } from "../shared/components/BaseImput";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Button } from "../shared/components/Button";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 
 
@@ -19,7 +21,6 @@ export const DetailPage = () => {
                     Como está o seu humor hoje?
                 </Text>
 
-                 
                     <View style={styles.footStarContainer}>
                         <TouchableOpacity onPress={() => { }}>
                             <FontAwesome 
@@ -75,6 +76,28 @@ export const DetailPage = () => {
                     placeholderTextColor={theme.colors.textPlaceholder}
                 />
             </BaseInput>    
+
+            <View style={{ flex: 1 }} />
+
+            <View style={styles.actionContainer}> 
+                <Button variant="outlined" color={theme.colors.error}>
+                    <MaterialIcons 
+                        name="delete-outline" 
+                        size={18} 
+                        color={theme.colors.error}
+                         
+                    />   
+                </Button>                 
+                <Button
+                    variant="outlined"
+                    grow 
+                    title='Cancelar'
+                />
+                <Button 
+                    grow
+                    title='Salvar'
+                />   
+            </View>
         </>
     );
 }
@@ -107,5 +130,12 @@ const styles = StyleSheet.create({
         gap: 8,
         paddingVertical: 8,
         paddingHorizontal: 16,
+    },
+
+    actionContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+
     }
 })

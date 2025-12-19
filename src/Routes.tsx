@@ -11,7 +11,7 @@ import { theme } from "./shared/themes/Theme";
  type TScreenDefinitions = {
     home: { newName: string} | undefined;
     setUserName: undefined;
-    detail: { rate: number };
+    detail: { rate: number, id?: string };
  }
 
 const Stack = createNativeStackNavigator<TScreenDefinitions>();

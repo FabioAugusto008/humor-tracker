@@ -6,97 +6,122 @@ import { BaseInput } from "../shared/components/BaseImput";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Button } from "../shared/components/Button";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-
+import { useState } from "react";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 
 
 export const DetailPage = () => {
     const navigation = useNavigation<TNavigationScreenProps>(); 
     const { params } = useRoute<TRouteProps<"detail">>();
+    
+    const [rate, setRate] = useState(params.rate);
+    const [date, setDate] = useState(new Date());
+    const [description, setDescription] = useState('');
+    const [showDateTimePicker, setShowDateTimePicker] = useState(false);
+    const insets = useSafeAreaInsets();
+    
 
     return(
         <>
-            <View style={styles.footerContainer}>
+            <View style={{ ...styles.footerContainer, paddingBottom: insets.bottom }}>
                 <Text style={styles.footerTitle}>
                     Como está o seu humor hoje?
                 </Text>
 
                     <View style={styles.footStarContainer}>
-                        <TouchableOpacity onPress={() => { }}>
-                            <FontAwesome 
-                                name={ params.rate >= 1 ? "star" : "star-o" } 
-                                size={36} 
-                                color={params.rate >= 1 ? theme.colors.highlight : theme.colors.textPlaceholder} 
-                            />
-                        </TouchableOpacity>                    
-                        <TouchableOpacity onPress={() => { }}>
-                            <FontAwesome 
-                                name={ params.rate >= 2 ? "star" : "star-o" } 
-                                size={36} 
-                                color={params.rate >= 2 ? theme.colors.highlight : theme.colors.textPlaceholder} 
-                            />
-                        </TouchableOpacity>                    
-                        <TouchableOpacity onPress={() => { }}>
-                            <FontAwesome 
-                                name={ params.rate >= 3 ? "star" : "star-o" } 
-                                size={36} 
-                                color={params.rate >= 3 ? theme.colors.highlight : theme.colors.textPlaceholder} 
-                            />
-                        </TouchableOpacity>                    
-                        <TouchableOpacity onPress={() => { }}>
-                            <FontAwesome 
-                                name={ params.rate >= 4 ? "star" : "star-o" } 
-                                size={36} 
-                                color={params.rate >= 4 ? theme.colors.highlight : theme.colors.textPlaceholder} 
-                            />
-                        </TouchableOpacity>                    
-                        <TouchableOpacity onPress={() => { }}>
-                            <FontAwesome 
-                                name={ params.rate >= 5 ? "star" : "star-o" } 
-                                size={36} 
-                                color={params.rate >= 5 ? theme.colors.highlight : theme.colors.textPlaceholder} 
-                            />
-                        </TouchableOpacity>                    
+                            <TouchableOpacity onPress={() => setRate(1)}>
+                                <FontAwesome 
+                                    name={ rate >= 1 ? "star" : "star-o" } 
+                                    size={36} 
+                                    color={rate >= 1 ? theme.colors.highlight : theme.colors.textPlaceholder} 
+                                />
+                            </TouchableOpacity>                    
+                            <TouchableOpacity onPress={() => setRate(2)}>
+                                <FontAwesome 
+                                    name={ rate >= 2 ? "star" : "star-o" } 
+                                    size={36} 
+                                    color={rate >= 2 ? theme.colors.highlight : theme.colors.textPlaceholder} 
+                                />
+                            </TouchableOpacity>                    
+                            <TouchableOpacity onPress={() => setRate(3)}>
+                                <FontAwesome 
+                                    name={ rate >= 3 ? "star" : "star-o" } 
+                                    size={36} 
+                                    color={rate >= 3 ? theme.colors.highlight : theme.colors.textPlaceholder} 
+                                />
+                            </TouchableOpacity>                    
+                            <TouchableOpacity onPress={() => setRate(4)}>
+                                <FontAwesome 
+                                    name={ rate >= 4 ? "star" : "star-o" } 
+                                    size={36} 
+                                    color={rate >= 4 ? theme.colors.highlight : theme.colors.textPlaceholder} 
+                                />
+                            </TouchableOpacity>                    
+                            <TouchableOpacity onPress={() => setRate(5)}>
+                                <FontAwesome 
+                                    name={ rate >= 5 ? "star" : "star-o" } 
+                                    size={36} 
+                                    color={rate >= 5 ? theme.colors.highlight : theme.colors.textPlaceholder} 
+                                />
+                            </TouchableOpacity>                    
                     </View>
-            </View>   
+                
 
-            <BaseInput label='Data e hora'>      
-                <TextInput 
-                    style={styles.footerInput}
-                    placeholder='Escreva seu nome aqui...'
-                    placeholderTextColor={theme.colors.textPlaceholder}
+                <BaseInput label='Data e hora' asButton onPress={() => setShowDateTimePicker(true)}>      
+                    <TextInput 
+                        value={date.toLocaleString('pt-Br')}
+                        pointerEvents='none'
+                        editable={false}
+                        style={styles.footerInput}
+                        placeholder='Selecione uma data e hora...'
+                        placeholderTextColor={theme.colors.textPlaceholder}
+                    />
+                </BaseInput>
+                <DateTimePickerModal
+                    isVisible={showDateTimePicker}
+                    mode="datetime"
+                    date={date}
+                    onCancel={() => setShowDateTimePicker(false)}
+                    onConfirm={(date) => { setShowDateTimePicker(false); setDate(date) }}
                 />
-            </BaseInput>
-            <BaseInput label='Descreva mais sobre esse humor'>      
-                <TextInput 
-                    numberOfLines={16}
-                    multiline
-                    style={{ ...styles.footerInput, ...styles.footerInputArea }}
-                    placeholder='Escreva seu nome aqui...'
-                    placeholderTextColor={theme.colors.textPlaceholder}
-                />
-            </BaseInput>    
 
-            <View style={{ flex: 1 }} />
+                <BaseInput label='Descreva mais sobre esse humor'>      
+                    <TextInput 
+                        value={description}
+                        onChangeText={setDescription}
+                        numberOfLines={16}
+                        multiline
+                        style={{ ...styles.footerInput, ...styles.footerInputArea }}
+                        placeholder='Escreva uma nota...'
+                        placeholderTextColor={theme.colors.textPlaceholder}
+                    />
+                </BaseInput>    
 
-            <View style={styles.actionContainer}> 
-                <Button variant="outlined" color={theme.colors.error}>
-                    <MaterialIcons 
-                        name="delete-outline" 
-                        size={18} 
-                        color={theme.colors.error}
-                         
+                <View style={{ flex: 1 }} />
+
+                <View style={styles.actionContainer}> 
+                    {params.id &&(
+                        <Button variant="outlined" color={theme.colors.error}>
+                            <MaterialIcons 
+                                name="delete-outline" 
+                                size={18} 
+                                color={theme.colors.error}
+                            />   
+                        </Button>
+                    )}                 
+                    <Button
+                        variant="outlined"
+                        grow 
+                        title='Cancelar'
+                        onPress={() => navigation.goBack()}
+                    />
+                    <Button 
+                        grow
+                        title='Salvar'
                     />   
-                </Button>                 
-                <Button
-                    variant="outlined"
-                    grow 
-                    title='Cancelar'
-                />
-                <Button 
-                    grow
-                    title='Salvar'
-                />   
+                </View>
             </View>
         </>
     );
@@ -112,6 +137,7 @@ const styles = StyleSheet.create({
     },
     footerContainer: {
        gap: 8,
+       flex: 1
     },
     footerInput: {
         fontSize: theme.fonts.sizes.body,

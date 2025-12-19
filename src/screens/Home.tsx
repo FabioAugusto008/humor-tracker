@@ -40,7 +40,7 @@ export const HomePage = () => {
         <View style={ styles.emptyContentConainer}>
             <Text style={ styles.emptyContentText}>
                 Você ainda não {'\n'}
-                registrou o seu humor!
+                registrou o seu humor! {'\n'} 
             </Text>
         </View>
 

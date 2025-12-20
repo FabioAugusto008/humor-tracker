@@ -9,7 +9,7 @@ export const theme = {
         primaryText: '#FFFFFF',
         error: '#FF0000',
         highlight: '#E0D53B',
-        backgroundHighLight: 'rgba(224, 213, 59, 0.17)',
+        backgroundHighLight: 'rgba(224, 213, 59, 0.12)',
     },
     fonts:{
         sizes:{

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { ListItem } from "../shared/components/ListItem";
 
 
 
@@ -37,12 +38,41 @@ export const HomePage = () => {
     return<>
         <Header name={name} />
 
-        <View style={ styles.emptyContentConainer}>
+        {/*<View style={ styles.emptyContentConainer}>
             <Text style={ styles.emptyContentText}>
                 Você ainda não {'\n'}
                 registrou o seu humor! {'\n'} 
             </Text>
-        </View>
+        </View>*/}
+
+            <View style={ styles.listContent}>
+                <ListItem 
+                    description='O Bene ja encheu o saco hoje, to estressado!'
+                    rate={1}
+                    datetime=''                
+                />
+                <ListItem 
+                    description='O Bene ja encheu o saco hoje, to estressado!'
+                    rate={2}
+                    datetime=''                
+                />
+                <ListItem 
+                    description='O Bene ja encheu o saco hoje, to estressado!'
+                    rate={3}
+                    datetime=''                
+                />
+                <ListItem 
+                    description='O Bene ja encheu o saco hoje, to estressado!'
+                    rate={4}
+                    datetime=''                
+                />
+                <ListItem 
+                    description='O Bene ja encheu o saco hoje, to estressado!'
+                    rate={5}
+                    datetime=''                
+                />
+                
+            </View>
 
         <Footer>
             <View style={styles.footerContainer}>
@@ -122,4 +152,10 @@ const styles = StyleSheet.create({
         fontFamily: theme.fonts.family.italic,
         color: theme.colors.textPlaceholder,
     },
+    listContent: {
+        flex: 1,
+        paddingHorizontal: 10,
+        gap: 10,
+        paddingVertical: 20
+    }
 });

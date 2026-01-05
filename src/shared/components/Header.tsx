@@ -11,7 +11,7 @@ export const Header = ({ name }: IHeaderProps) => {
     return(
         <View style={styles.headerContainer}>
             <Text style={styles.headerText}>Olá, </Text>
-            <Text style={styles.headerBoldText}>{!name ? 'Seu nome é?' : `${name}!` }</Text>
+            <Text style={styles.headerBoldText}>{!name ? 'Seu nome é?' : `${name}! ` }</Text>
         </View>
     );
 }

@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { TNavigationScreenProps, TRouteProps } from "../Routes";
 import { Header } from "../shared/components/Header";
 import { Footer } from "../shared/components/Footer";
@@ -13,12 +13,29 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { ListItem } from "../shared/components/ListItem";
 
 
+interface IListItem {
+    id: string;
+    description: string;
+    rate: number;
+    datetime: string;
+
+}
 
 export const HomePage = () => {
     const navigation = useNavigation<TNavigationScreenProps>(); 
     const { params } = useRoute<TRouteProps<"home">>();
 
     const [name, setName] = useState('');
+    const [list, setList] = useState<IListItem[]>([
+        { id: '1', datetime: '', rate: 1, description: 'O Bene ja encheu o saco hoje, to estressado!' },
+        { id: '2', datetime: '', rate: 2, description: 'O Bene ja encheu o saco hoje, to estressado!' },
+        { id: '3', datetime: '', rate: 3, description: 'O Bene ja encheu o saco hoje, to estressado!' },
+        { id: '4', datetime: '', rate: 4, description: 'O Bene ja encheu o saco hoje, to estressado!' },
+        { id: '5', datetime: '', rate: 5, description: 'O Bene ja encheu o saco hoje, to estressado!' },
+        { id: '6', datetime: '', rate: 5, description: 'O Bene ja encheu o saco hoje, to estressado!' },
+        { id: '7', datetime: '', rate: 5, description: 'O Bene ja encheu o saco hoje, to estressado!' },
+        { id: '8', datetime: '', rate: 5, description: 'O Bene ja encheu o saco hoje, to estressado!' },
+    ]);
     
     useEffect(() => {
         if (params?.newName) {
@@ -38,41 +55,27 @@ export const HomePage = () => {
     return<>
         <Header name={name} />
 
-        {/*<View style={ styles.emptyContentConainer}>
-            <Text style={ styles.emptyContentText}>
-                Você ainda não {'\n'}
-                registrou o seu humor! {'\n'} 
-            </Text>
-        </View>*/}
-
-            <View style={ styles.listContent}>
-                <ListItem 
-                    description='O Bene ja encheu o saco hoje, to estressado!'
-                    rate={1}
-                    datetime=''                
-                />
-                <ListItem 
-                    description='O Bene ja encheu o saco hoje, to estressado!'
-                    rate={2}
-                    datetime=''                
-                />
-                <ListItem 
-                    description='O Bene ja encheu o saco hoje, to estressado!'
-                    rate={3}
-                    datetime=''                
-                />
-                <ListItem 
-                    description='O Bene ja encheu o saco hoje, to estressado!'
-                    rate={4}
-                    datetime=''                
-                />
-                <ListItem 
-                    description='O Bene ja encheu o saco hoje, to estressado!'
-                    rate={5}
-                    datetime=''                
-                />
-                
-            </View>
+            <FlatList 
+                data={list}
+                contentContainerStyle={styles.listContent}
+                keyExtractor={ (item) => item.id }
+                renderItem={({item}) => (
+                    <ListItem 
+                        key={item.id}
+                        description={item.description}
+                        rate={item.rate}
+                        datetime={item.datetime}                
+                    />
+                )}
+                ListEmptyComponent={(
+                    <View style={ styles.emptyContentConainer}>
+                        <Text style={ styles.emptyContentText}>
+                            Você ainda não {'\n'}
+                            registrou o seu humor! {'\n'} 
+                        </Text>
+                    </View>
+                )}
+            />
 
         <Footer>
             <View style={styles.footerContainer}>
@@ -153,9 +156,9 @@ const styles = StyleSheet.create({
         color: theme.colors.textPlaceholder,
     },
     listContent: {
-        flex: 1,
         paddingHorizontal: 10,
         gap: 10,
+        flexGrow: 1,
         paddingVertical: 20
     }
 });

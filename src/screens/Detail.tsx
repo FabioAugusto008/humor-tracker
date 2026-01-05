@@ -10,6 +10,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
@@ -23,16 +24,31 @@ export const DetailPage = () => {
     const [showDateTimePicker, setShowDateTimePicker] = useState(false);
     const insets = useSafeAreaInsets();
     
-    const handleSave = () => {
+    const handleSave = async () => {
 
-        navigation.popTo('home', {
-            newItem: { 
-                id: uuid(),
-                datetime: datetime.getDate(), 
-                rate, 
-                description 
-            },
-        });
+        const newItem = { 
+            id: uuid(),
+            datetime: datetime.getDate(), 
+            rate, 
+            description 
+        };
+
+        
+        try {
+            const items = await AsyncStorage
+                .getItem('humor-items', )
+                .then(itemsAsString => !itemsAsString ? [] : JSON.parse(itemsAsString) as any[]); 
+
+            items.unshift(newItem);    
+
+            await AsyncStorage.setItem('humor-items', JSON.stringify(items));
+
+            navigation.popTo('home', { newItem });
+        } catch (e) {
+        // saving error
+        }
+
+        
 
 
     }

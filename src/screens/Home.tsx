@@ -57,6 +57,13 @@ export const HomePage = () => {
         })
     }, []);
 
+     useEffect(() => {
+        AsyncStorage
+        .getItem('humor-items')
+        .then(itemsAsString => !itemsAsString ? [] : JSON.parse(itemsAsString) as any[])
+        .then(items => setList(items))
+    }, []);
+
 
     return<>
         <Header name={name} />

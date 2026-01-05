@@ -4,7 +4,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 interface IListProps {
     rate: number;
-    datetime: string,
+    datetime: number,
     description: string;
 }
 

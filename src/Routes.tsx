@@ -8,8 +8,16 @@ import { Children } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { theme } from "./shared/themes/Theme";
 
+
+ type THumorItem = {
+    id: string; 
+    datetime: number; 
+    rate: number;
+    description: string;
+ }
+
  type TScreenDefinitions = {
-    home: { newName: string} | undefined;
+    home: { newName?: string, newItem?: THumorItem } | undefined;
     setUserName: undefined;
     detail: { rate: number, id?: string };
  }

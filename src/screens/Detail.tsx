@@ -5,6 +5,7 @@ import { theme } from "../shared/themes/Theme";
 import { BaseInput } from "../shared/components/BaseImput";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Button } from "../shared/components/Button";
+import { v4 as uuid } from 'uuid';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -17,11 +18,24 @@ export const DetailPage = () => {
     const { params } = useRoute<TRouteProps<"detail">>();
     
     const [rate, setRate] = useState(params.rate);
-    const [date, setDate] = useState(new Date());
+    const [datetime, setDatetime] = useState(new Date());
     const [description, setDescription] = useState('');
     const [showDateTimePicker, setShowDateTimePicker] = useState(false);
     const insets = useSafeAreaInsets();
     
+    const handleSave = () => {
+
+        navigation.popTo('home', {
+            newItem: { 
+                id: uuid(),
+                datetime: datetime.getDate(), 
+                rate, 
+                description 
+            },
+        });
+
+
+    }
 
     return(
         <>
@@ -71,7 +85,7 @@ export const DetailPage = () => {
 
                 <BaseInput label='Data e hora' asButton onPress={() => setShowDateTimePicker(true)}>      
                     <TextInput 
-                        value={date.toLocaleString('pt-Br')}
+                        value={datetime.toLocaleString('pt-Br')}
                         pointerEvents='none'
                         editable={false}
                         style={styles.footerInput}
@@ -82,9 +96,9 @@ export const DetailPage = () => {
                 <DateTimePickerModal
                     isVisible={showDateTimePicker}
                     mode="datetime"
-                    date={date}
+                    date={datetime}
                     onCancel={() => setShowDateTimePicker(false)}
-                    onConfirm={(date) => { setShowDateTimePicker(false); setDate(date) }}
+                    onConfirm={(date) => { setShowDateTimePicker(false); setDatetime(date) }}
                 />
 
                 <BaseInput label='Descreva mais sobre esse humor'>      
@@ -120,6 +134,7 @@ export const DetailPage = () => {
                     <Button 
                         grow
                         title='Salvar'
+                        onPress={handleSave}
                     />   
                 </View>
             </View>

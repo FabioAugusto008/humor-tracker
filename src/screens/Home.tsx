@@ -17,7 +17,7 @@ interface IListItem {
     id: string;
     description: string;
     rate: number;
-    datetime: string;
+    datetime: number;
 
 }
 
@@ -26,22 +26,28 @@ export const HomePage = () => {
     const { params } = useRoute<TRouteProps<"home">>();
 
     const [name, setName] = useState('');
-    const [list, setList] = useState<IListItem[]>([
-        { id: '1', datetime: '', rate: 1, description: 'O Bene ja encheu o saco hoje, to estressado!' },
-        { id: '2', datetime: '', rate: 2, description: 'O Bene ja encheu o saco hoje, to estressado!' },
-        { id: '3', datetime: '', rate: 3, description: 'O Bene ja encheu o saco hoje, to estressado!' },
-        { id: '4', datetime: '', rate: 4, description: 'O Bene ja encheu o saco hoje, to estressado!' },
-        { id: '5', datetime: '', rate: 5, description: 'O Bene ja encheu o saco hoje, to estressado!' },
-        { id: '6', datetime: '', rate: 5, description: 'O Bene ja encheu o saco hoje, to estressado!' },
-        { id: '7', datetime: '', rate: 5, description: 'O Bene ja encheu o saco hoje, to estressado!' },
-        { id: '8', datetime: '', rate: 5, description: 'O Bene ja encheu o saco hoje, to estressado!' },
-    ]);
+    const [list, setList] = useState<IListItem[]>([]);
     
     useEffect(() => {
         if (params?.newName) {
             setName(params?.newName || '')
         }
     }, [params?.newName]);
+
+    useEffect(() => {
+        if (params?.newItem) {
+            setList( oldList => {
+                if (!params.newItem) return oldList;
+
+                const index = oldList.findIndex(item => item.id === params.newItem?.id)
+                if(index < 0) return [...oldList, params.newItem ];
+
+                oldList.splice(index, 1, params.newItem )
+
+                return [...oldList];
+            });
+        }
+    }, [params?.newItem]);
 
     useEffect(() => {
         AsyncStorage
@@ -70,8 +76,8 @@ export const HomePage = () => {
                 ListEmptyComponent={(
                     <View style={ styles.emptyContentConainer}>
                         <Text style={ styles.emptyContentText}>
-                            Você ainda não {'\n'}
-                            registrou o seu humor! {'\n'} 
+                            Você ainda não  {'\n'}
+                             registrou o seu humor!  {'\n'} 
                         </Text>
                     </View>
                 )}
@@ -159,6 +165,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         gap: 10,
         flexGrow: 1,
-        paddingVertical: 20
+        paddingVertical: 20,
     }
 });

@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { Inter_800ExtraBold, Inter_500Medium_Italic, Inter_400Regular, useFonts } from '@expo-google-fonts/inter' 
 import * as SplashScreen from 'expo-splash-screen';
-import { AppRoutes } from './Routes';
+import 'react-native-get-random-values';
 
+import { AppRoutes } from './Routes';
 
 
 SplashScreen.preventAutoHideAsync();

@@ -48,6 +48,21 @@ export const HomePage = () => {
             });
         }
     }, [params?.newItem]);
+    
+    useEffect(() => {
+        if (params?.idDeleted) {
+            setList( oldList => {
+                if (!params?.idDeleted) return oldList;
+
+                const index = oldList.findIndex(item => item.id === params?.idDeleted)
+                if(index < 0) return oldList;
+
+                oldList.splice(index, 1)
+
+                return [...oldList];
+            });
+        }
+    }, [params?.idDeleted]);  
 
     useEffect(() => {
         AsyncStorage
@@ -74,6 +89,7 @@ export const HomePage = () => {
                 keyExtractor={ (item) => item.id }
                 renderItem={({item}) => (
                     <ListItem 
+                     onPress={ () => navigation.navigate('detail', { id: item.id }) }
                         key={item.id}
                         description={item.description}
                         rate={item.rate}

@@ -17,9 +17,9 @@ import { theme } from "./shared/themes/Theme";
  }
 
  type TScreenDefinitions = {
-    home: { newName?: string, newItem?: THumorItem } | undefined;
+    home: { newName?: string, idDeleted?: string, newItem?: THumorItem } | undefined;
     setUserName: undefined;
-    detail: { rate: number, id?: string };
+    detail: { rate?: number, id?: string };
  }
 
 const Stack = createNativeStackNavigator<TScreenDefinitions>();

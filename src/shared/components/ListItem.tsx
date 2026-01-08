@@ -1,20 +1,25 @@
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { theme } from "../themes/Theme"
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { format } from "date-fns";
 
 interface IListProps {
     rate: number;
     datetime: number,
     description: string;
+    onPress(): void;
 }
 
-export const ListItem = ({ rate, datetime, description }: IListProps) => {
+export const ListItem = ({ rate, datetime, description, onPress }: IListProps) => {
 
 
     return(
-        <View style={ styles.container }>
+        <TouchableOpacity
+        onPress={onPress}
+        activeOpacity={0.6}
+        style={ styles.container }>
             <Text style={ styles.dateTimeText }>
-                20/12/2025 às 10:00 
+                { format( new Date(datetime), " dd/MM/yyyy 'às' HH:mm ") } 
             </Text>
 
             <View style={ styles.starsContainer }>
@@ -42,10 +47,12 @@ export const ListItem = ({ rate, datetime, description }: IListProps) => {
                 ))}          
             </View>
 
-            <Text style={ styles.descriptionText }>
-                {description}
-            </Text>
-        </View>
+            {description && (
+                <Text style={ styles.descriptionText } numberOfLines={2} >
+                    {description}
+                </Text>
+            )}
+        </TouchableOpacity>
     )
 }
 
